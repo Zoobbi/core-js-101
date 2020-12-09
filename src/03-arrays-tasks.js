@@ -552,8 +552,15 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const keys = array.map(keySelector); // массив по странам
+  const unKeys = Array.from(new Set(keys)).map((item) => Array.of(item)); // каждая страна 1 раз
+  const res = new Map(unKeys.map((item) => [item[0], array.filter((value) => item[0] === [value]
+  // заполняем
+    .map(keySelector)[0])
+    .map(valueSelector)]));
+
+  return res;
 }
 
 
@@ -570,8 +577,9 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  const result = [].concat(...arr.map(childrenSelector));
+  return result;
 }
 
 
@@ -587,8 +595,8 @@ function selectMany(/* arr, childrenSelector */) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((accum, value) => accum[value], arr);
 }
 
 
@@ -610,10 +618,17 @@ function getElementByIndexes(/* arr, indexes */) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
-}
+function swapHeadAndTail(arr) {
+  const isEven = arr.length % 2 !== 0;
 
+  const head = arr.filter((item, index) => index < (arr.length - 1) / 2);
+  const tail = arr.filter((item, index) => index > (arr.length - 1) / 2);
+  const centerEl = isEven ? arr[(arr.length - 1) / 2] : [];
+  let result = [];
+  result = result.concat(tail, centerEl, head);
+
+  return result;
+}
 
 module.exports = {
   findElement,
