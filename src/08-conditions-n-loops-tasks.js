@@ -433,10 +433,29 @@ function getCommonDirectoryPath(pathes) {
  *                        [[ 4 ],
  *   [[ 1, 2, 3]]    X     [ 5 ],          =>     [[ 32 ]]
  *                         [ 6 ]]
- *
+ * Умноже́ние ма́триц — одна из основных операций над матрицами. Матрица, получаемая в результате
+ * операции умножения,
+ * называется произведе́нием ма́триц. Элементы новой матрицы получаются из элементов
+ * старых матриц в соответствии с правилами, проиллюстрированными ниже
+ * Перейти к разделу «Иллюстрация».
+
+ Матрицы A и B
+ могут быть перемножены, если они совместимы в том смысле,
+ что число столбцов матрицы A равно числу
+ строк B.
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = Array(m1.length);
+  for (let matrixRow1 = 0; matrixRow1 < m1.length; matrixRow1 += 1) {
+    res[matrixRow1] = Array(m2[0].length);
+    for (let matrixCol2 = 0; matrixCol2 < m2[0].length; matrixCol2 += 1) {
+      res[matrixRow1][matrixCol2] = 0;
+      for (let matrixCol1 = 0; matrixCol1 < m1[0].length; matrixCol1 += 1) {
+        res[matrixRow1][matrixCol2] += m1[matrixRow1][matrixCol1] * m2[matrixCol1][matrixCol2];
+      }
+    }
+  }
+  return res;
 }
 
 
@@ -470,8 +489,28 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let winSign;
+  for (let i = 0; i < position[0].length; i += 1) {
+    if (position[0][i] && position[0][i] === position[1][i] && position[1][i] === position[2][i]) {
+      winSign = position[0][i];
+      break;
+    }
+  }
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][0] && position[i][0] === position[i][1] && position[i][1] === position[i][2]) {
+      // eslint-disable-next-line prefer-destructuring
+      winSign = position[i][0];
+      break;
+    }
+  }
+  if (position[1][1]
+    && ((position[0][0] === position[1][1] && position[1][1] === position[2][2])
+      || (position[0][2] === position[1][1] && position[1][1] === position[2][0]))) {
+    // eslint-disable-next-line prefer-destructuring
+    winSign = position[1][1];
+  }
+  return winSign;
 }
 
 
