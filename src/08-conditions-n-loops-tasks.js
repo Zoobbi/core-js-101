@@ -507,8 +507,9 @@ function evaluateTicTacToePosition(position) {
   if (position[1][1]
     && ((position[0][0] === position[1][1] && position[1][1] === position[2][2])
       || (position[0][2] === position[1][1] && position[1][1] === position[2][0]))) {
-    // eslint-disable-next-line prefer-destructuring
-    winSign = position[1][1];
+    const a = position[1];
+
+    ([, winSign] = [...a]);
   }
   return winSign;
 }
